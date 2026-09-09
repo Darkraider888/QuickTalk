@@ -3,6 +3,16 @@
 **QuickTalk v1.0** is a temporary real-time chat application built with Java, Spring Boot, WebSocket, MongoDB, and vanilla JavaScript. It is designed for fast room-based conversations without accounts, passwords, or cookies.
 
 Built by **Darkraider888**.
+### 🌐 Live Demo
+
+**[Open QuickTalk](https://quicktalk-1adv.onrender.com/)**
+
+> The free hosted instance may take a short time to wake up after being inactive.<br>
+![Java](https://img.shields.io/badge/Java-25-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.1-brightgreen)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
+![WebSocket](https://img.shields.io/badge/WebSocket-Real--Time-blue)
+![Release](https://img.shields.io/badge/release-v1.0.0-black)
 
 ## What QuickTalk does
 
