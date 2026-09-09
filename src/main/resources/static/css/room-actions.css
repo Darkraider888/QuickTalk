@@ -1,0 +1,1284 @@
+/* ====================================================== */
+/* QUICKTALK                                              */
+/* REPLY + DELETE + REACTION UI                           */
+/* ====================================================== */
+
+
+/* ====================================================== */
+/* MESSAGE                                                */
+/* ====================================================== */
+
+.message {
+    position: relative;
+}
+
+
+/* ====================================================== */
+/* BUBBLE SHELL                                           */
+/* ====================================================== */
+
+.message-bubble-shell {
+    position: relative;
+
+    width: fit-content;
+
+    max-width: 100%;
+}
+
+
+.other-message
+.message-bubble-shell {
+    align-self: flex-start;
+}
+
+
+.my-message
+.message-bubble-shell {
+    align-self: flex-end;
+}
+
+
+/* ====================================================== */
+/* CLICKABLE BUBBLE                                       */
+/* ====================================================== */
+
+.message:not(.deleted-message)
+.message-bubble {
+    cursor: pointer;
+}
+
+
+.message:not(.deleted-message)
+.message-bubble:focus {
+    outline:
+            2px solid
+            rgba(
+                    37,
+                    99,
+                    235,
+                    0.30
+            );
+
+    outline-offset: 2px;
+}
+
+
+/* ====================================================== */
+/* HOVER ACTIONS                                          */
+/* ====================================================== */
+
+.message-actions {
+    position: absolute;
+
+    top: 50%;
+
+    left:
+            calc(
+                    100% + 7px
+            );
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    margin: 0;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform:
+            translateY(-50%);
+
+    transition:
+            opacity 0.14s ease,
+            visibility 0.14s ease;
+
+    z-index: 40;
+}
+
+
+/* OWN MESSAGE ACTIONS GO LEFT */
+
+.my-message
+.message-actions {
+    right:
+            calc(
+                    100% + 7px
+            );
+
+    left: auto;
+}
+
+
+/* ONLY SHOW ON HOVER / KEYBOARD FOCUS */
+
+.message:hover
+.message-actions,
+
+.message:focus-within
+.message-actions {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* ====================================================== */
+/* ACTION BUTTON                                          */
+/* ====================================================== */
+
+.message-action-button {
+    width: 30px;
+
+    height: 29px;
+
+    min-width: 30px;
+
+    min-height: 29px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #71717a;
+
+    background:
+            rgba(
+                    255,
+                    255,
+                    255,
+                    0.97
+            );
+
+    border:
+            1px solid
+            #e4e4e7;
+
+    border-radius: 8px;
+
+    box-shadow:
+            0 5px 15px
+            rgba(
+                    0,
+                    0,
+                    0,
+                    0.09
+            );
+
+    cursor: pointer;
+
+    line-height: 1;
+
+    transition:
+            background 0.14s ease,
+            color 0.14s ease,
+            border-color 0.14s ease,
+            transform 0.14s ease;
+}
+
+
+.message-action-button:hover {
+    transform:
+            translateY(-1px);
+}
+
+
+/* ====================================================== */
+/* REPLY BUTTON                                           */
+/* ====================================================== */
+
+.message-reply-button {
+    font-size: 17px;
+
+    font-weight: 800;
+}
+
+
+.message-reply-button:hover {
+    color: #2563eb;
+
+    background: #eff6ff;
+
+    border-color:
+            rgba(
+                    37,
+                    99,
+                    235,
+                    0.25
+            );
+}
+
+
+/* ====================================================== */
+/* DELETE BUTTON                                          */
+/* ====================================================== */
+
+.message-delete-button {
+    color: #b91c1c;
+
+    font-size: 13px;
+}
+
+
+.message-delete-button:hover {
+    color: #ffffff;
+
+    background: #dc2626;
+
+    border-color: #dc2626;
+}
+
+
+/* ====================================================== */
+/* REACTION PICKER                                        */
+/* ====================================================== */
+
+.message-reaction-picker {
+    position: absolute;
+
+    bottom:
+            calc(
+                    100% + 7px
+            );
+
+    left: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 2px;
+
+    padding: 5px;
+
+    background:
+            rgba(
+                    255,
+                    255,
+                    255,
+                    0.98
+            );
+
+    border:
+            1px solid
+            #e4e4e7;
+
+    border-radius: 999px;
+
+    box-shadow:
+            0 10px 30px
+            rgba(
+                    0,
+                    0,
+                    0,
+                    0.15
+            );
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform:
+            translateY(4px)
+            scale(0.96);
+
+    transition:
+            opacity 0.14s ease,
+            visibility 0.14s ease,
+            transform 0.14s ease;
+
+    z-index: 70;
+}
+
+
+.my-message
+.message-reaction-picker {
+    right: 0;
+
+    left: auto;
+}
+
+
+.message-reaction-picker.show {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+            translateY(0)
+            scale(1);
+}
+
+
+/* ====================================================== */
+/* REACTION EMOJI                                         */
+/* ====================================================== */
+
+.message-reaction-option {
+    width: 31px;
+
+    height: 31px;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition:
+            background 0.12s ease,
+            transform 0.12s ease;
+}
+
+
+.message-reaction-option:hover {
+    background: #f4f4f5;
+
+    transform:
+            scale(1.14);
+}
+
+
+/* ====================================================== */
+/* REACTION COUNTS                                        */
+/* ====================================================== */
+
+.message-reaction-summary {
+    width: fit-content;
+
+    max-width: 100%;
+
+    margin-top: 3px;
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 4px;
+}
+
+
+.my-message
+.message-reaction-summary {
+    align-self: flex-end;
+
+    justify-content: flex-end;
+}
+
+
+.message-reaction-chip {
+    min-height: 22px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    padding:
+            2px
+            7px;
+
+    color: #52525b;
+
+    background:
+            rgba(
+                    255,
+                    255,
+                    255,
+                    0.88
+            );
+
+    border:
+            1px solid
+            #e4e4e7;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    line-height: 1;
+}
+
+
+.message-reaction-chip-emoji {
+    font-size: 13px;
+}
+
+
+.message-reaction-chip-count {
+    font-size: 9px;
+
+    font-weight: 800;
+}
+
+
+/* ====================================================== */
+/* REPLY REFERENCE                                        */
+/* ====================================================== */
+
+.message-reply-reference {
+    width: fit-content;
+
+    max-width: 340px;
+
+    min-height: 39px;
+
+    margin:
+            2px
+            0
+            5px;
+
+    padding:
+            6px
+            10px
+            6px
+            8px;
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    gap: 8px;
+
+    overflow: hidden;
+
+    color: #3f3f46;
+
+    background:
+            rgba(
+                    37,
+                    99,
+                    235,
+                    0.055
+            );
+
+    border:
+            1px solid
+            rgba(
+                    37,
+                    99,
+                    235,
+                    0.11
+            );
+
+    border-left:
+            3px solid
+            #2563eb;
+
+    border-radius:
+            4px
+            9px
+            9px
+            4px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    box-shadow: none;
+
+    transition:
+            background 0.14s ease,
+            border-color 0.14s ease;
+}
+
+
+.my-message
+.message-reply-reference {
+    align-self: flex-end;
+}
+
+
+.message-reply-reference:hover {
+    background:
+            rgba(
+                    37,
+                    99,
+                    235,
+                    0.09
+            );
+
+    border-color:
+            rgba(
+                    37,
+                    99,
+                    235,
+                    0.19
+            );
+
+    border-left-color:
+            #2563eb;
+}
+
+
+/* ====================================================== */
+/* REPLY ICON                                             */
+/* ====================================================== */
+
+.message-reply-icon {
+    width: 22px;
+
+    height: 22px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #2563eb;
+
+    background:
+            rgba(
+                    37,
+                    99,
+                    235,
+                    0.09
+            );
+
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    font-weight: 900;
+}
+
+
+/* ====================================================== */
+/* REPLY TEXT                                             */
+/* ====================================================== */
+
+.message-reply-copy {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1px;
+}
+
+
+.message-reply-sender {
+    overflow: hidden;
+
+    color: #2563eb;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.message-reply-preview {
+    max-width: 265px;
+
+    overflow: hidden;
+
+    color: #71717a;
+
+    font-size: 10px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.message-reply-unavailable {
+    cursor: default;
+
+    opacity: 0.65;
+}
+
+
+/* ====================================================== */
+/* REPLY COMPOSER                                         */
+/* ====================================================== */
+
+.reply-composer {
+    display: none;
+
+    min-height: 48px;
+
+    align-items: center;
+
+    gap: 11px;
+
+    margin-bottom: 8px;
+
+    padding:
+            8px
+            11px;
+
+    background:
+            rgba(
+                    245,
+                    245,
+                    246,
+                    0.95
+            );
+
+    border:
+            1px solid
+            #e4e4e7;
+
+    border-radius: 10px;
+}
+
+
+.reply-composer.show {
+    display: flex;
+}
+
+
+.reply-composer-line {
+    width: 3px;
+
+    align-self: stretch;
+
+    flex-shrink: 0;
+
+    background: #2563eb;
+
+    border-radius: 999px;
+}
+
+
+.reply-composer-content {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.reply-composer-sender {
+    color: #2563eb;
+
+    font-size: 10px;
+
+    font-weight: 850;
+}
+
+
+.reply-composer-message {
+    overflow: hidden;
+
+    color: #71717a;
+
+    font-size: 10px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.reply-composer-cancel {
+    width: 29px;
+
+    height: 29px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    color: #71717a;
+
+    background: transparent;
+
+    border: none;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+
+.reply-composer-cancel:hover {
+    color: #18181b;
+
+    background: #e4e4e7;
+}
+
+
+/* ====================================================== */
+/* DELETED MESSAGE                                        */
+/* ====================================================== */
+
+.deleted-message {
+    opacity: 0.82;
+}
+
+
+.message-bubble-deleted {
+    color: #a1a1aa !important;
+
+    background:
+            rgba(
+                    161,
+                    161,
+                    170,
+                    0.08
+            ) !important;
+
+    border:
+            1px dashed
+            #d4d4d8 !important;
+
+    box-shadow: none !important;
+
+    cursor: default !important;
+
+    font-style: italic;
+}
+
+
+/* ====================================================== */
+/* DELETE OVERLAY                                         */
+/* ====================================================== */
+
+.delete-message-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1900;
+
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+
+.delete-message-overlay.show {
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+.delete-message-backdrop {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+            rgba(
+                    9,
+                    9,
+                    11,
+                    0.30
+            );
+
+    opacity: 0;
+
+    backdrop-filter:
+            blur(4px);
+
+    -webkit-backdrop-filter:
+            blur(4px);
+
+    transition:
+            opacity
+            0.18s ease;
+}
+
+
+.delete-message-overlay.show
+.delete-message-backdrop {
+    opacity: 1;
+}
+
+
+/* ====================================================== */
+/* DELETE MODAL                                           */
+/* ====================================================== */
+
+.delete-message-modal {
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width:
+            min(
+                    390px,
+                    calc(
+                            100% - 30px
+                    )
+            );
+
+    padding: 20px;
+
+    color: #18181b;
+
+    background:
+            rgba(
+                    255,
+                    255,
+                    255,
+                    0.98
+            );
+
+    border:
+            1px solid
+            rgba(
+                    255,
+                    255,
+                    255,
+                    0.85
+            );
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 28px 80px
+            rgba(
+                    0,
+                    0,
+                    0,
+                    0.23
+            );
+
+    backdrop-filter:
+            blur(24px);
+
+    -webkit-backdrop-filter:
+            blur(24px);
+
+    opacity: 0;
+
+    transform:
+            translate(
+                    -50%,
+                    -47%
+            )
+            scale(0.98);
+
+    transition:
+            opacity
+            0.18s ease,
+            transform
+            0.18s ease;
+}
+
+
+.delete-message-overlay.show
+.delete-message-modal {
+    opacity: 1;
+
+    transform:
+            translate(
+                    -50%,
+                    -50%
+            )
+            scale(1);
+}
+
+
+.delete-message-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #dc2626;
+
+    font-size: 8px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.13em;
+}
+
+
+.delete-message-modal h2 {
+    margin: 0;
+
+    color: #18181b;
+
+    font-size: 19px;
+}
+
+
+.delete-message-modal p {
+    margin:
+            8px
+            0
+            14px;
+
+    color: #71717a;
+
+    font-size: 11px;
+
+    line-height: 1.55;
+}
+
+
+/* ====================================================== */
+/* DELETE PREVIEW                                         */
+/* ====================================================== */
+
+.delete-message-preview {
+    margin-bottom: 16px;
+
+    padding:
+            10px
+            11px;
+
+    overflow: hidden;
+
+    color: #52525b;
+
+    background: #f4f4f5;
+
+    border:
+            1px solid
+            #e4e4e7;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* ====================================================== */
+/* DELETE BUTTONS                                         */
+/* ====================================================== */
+
+.delete-message-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+}
+
+
+.delete-message-cancel,
+.delete-message-confirm {
+    min-height: 36px;
+
+    padding:
+            0
+            13px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+
+.delete-message-cancel {
+    color: #52525b;
+
+    background: #ffffff;
+
+    border:
+            1px solid
+            #d4d4d8;
+}
+
+
+.delete-message-confirm {
+    color: #ffffff;
+
+    background: #dc2626;
+
+    border:
+            1px solid
+            #dc2626;
+}
+
+
+.delete-message-confirm:hover {
+    background: #b91c1c;
+
+    border-color: #b91c1c;
+}
+
+
+/* ====================================================== */
+/* TOUCH DEVICES                                          */
+/* ====================================================== */
+
+/*
+ * Phones/tablets do not have mouse hover.
+ *
+ * After tapping a message:
+ *
+ * - reaction picker appears
+ * - reply/delete controls become available
+ */
+
+@media (hover: none) {
+
+    .message.message-controls-open
+    .message-actions {
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+    }
+}
+
+
+/* ====================================================== */
+/* MOBILE                                                 */
+/* ====================================================== */
+
+@media (max-width: 700px) {
+
+    .message-actions {
+        gap: 3px;
+    }
+
+
+    .message-action-button {
+        width: 28px;
+
+        height: 28px;
+
+        min-width: 28px;
+
+        min-height: 28px;
+    }
+
+
+    .other-message
+    .message-actions {
+        left:
+                calc(
+                        100% + 5px
+                );
+    }
+
+
+    .my-message
+    .message-actions {
+        right:
+                calc(
+                        100% + 5px
+                );
+    }
+
+
+    .message-reaction-picker {
+        gap: 1px;
+
+        padding: 4px;
+    }
+
+
+    .message-reaction-option {
+        width: 29px;
+
+        height: 29px;
+
+        font-size: 16px;
+    }
+
+
+    .message-reply-reference {
+        max-width: 265px;
+    }
+
+
+    .message-reply-preview {
+        max-width: 190px;
+    }
+
+
+    .reply-composer {
+        margin-bottom: 6px;
+
+        padding:
+                7px
+                9px;
+    }
+
+
+    .delete-message-modal {
+        padding: 17px;
+    }
+}/* ====================================================== */
+/* STEP 20G.2 - PROPER TOGGLE REACTIONS                   */
+/* ====================================================== */
+
+
+/* ====================================================== */
+/* REACTION CHIP IS CLICKABLE                             */
+/* ====================================================== */
+
+.message-reaction-summary .message-reaction-chip {
+    appearance: none;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    min-height: 25px;
+
+    padding:
+            3px
+            8px;
+
+    background: #ffffff;
+
+    color: #52525b;
+
+    border:
+            1px solid
+            #e4e4e7;
+
+    border-radius: 999px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    transition:
+            background 0.15s ease,
+            color 0.15s ease,
+            border-color 0.15s ease,
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+
+.message-reaction-summary
+.message-reaction-chip:hover {
+    background: #f4f4f5;
+
+    border-color: #d4d4d8;
+
+    transform:
+            translateY(-1px);
+}
+
+
+/* ====================================================== */
+/* MY ACTIVE REACTION                                     */
+/* ====================================================== */
+
+.message-reaction-summary
+.message-reaction-chip.my-reaction {
+    color: #ffffff;
+
+    background: #18181b;
+
+    border-color: #18181b;
+
+    box-shadow:
+            0 4px 12px
+            rgba(0, 0, 0, 0.12);
+}
+
+
+.message-reaction-summary
+.message-reaction-chip.my-reaction:hover {
+    color: #ffffff;
+
+    background: #27272a;
+
+    border-color: #27272a;
+}
+
+
+/* ====================================================== */
+/* ACTIVE EMOJI INSIDE PICKER                             */
+/* ====================================================== */
+
+.message-reaction-option.selected {
+    background: #18181b;
+
+    border-color: #18181b;
+
+    box-shadow:
+            0 3px 10px
+            rgba(0, 0, 0, 0.12);
+}
+
+
+.message-reaction-option.selected:hover {
+    background: #27272a;
+
+    border-color: #27272a;
+}
+
+
+/* ====================================================== */
+/* FOCUS                                                  */
+/* ====================================================== */
+
+.message-reaction-chip:focus-visible,
+.message-reaction-option:focus-visible {
+    outline:
+            2px solid
+            #18181b;
+
+    outline-offset:
+            2px;
+}

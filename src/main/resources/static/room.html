@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+            name="description"
+            content="QuickTalk temporary real-time chat room."
+    >
+
+    <title>
+        QuickTalk | Room
+    </title>
+
+
+    <!-- MAIN QUICKTALK DESIGN -->
+
+    <link
+            rel="stylesheet"
+            href="/css/style.css?v=1.0.0"
+    >
+
+
+    <!-- REPLY / DELETE / REACTION DESIGN -->
+
+    <link
+            rel="stylesheet"
+            href="/css/room-actions.css?v=1.0.0"
+    >
+
+</head>
+
+
+<body class="chat-body">
+
+
+<!-- ====================================================== -->
+<!-- BACKGROUND                                             -->
+<!-- ====================================================== -->
+
+<div
+        class="room-background"
+        aria-hidden="true"
+>
+
+    <div class="room-glow room-glow-one"></div>
+
+    <div class="room-glow room-glow-two"></div>
+
+</div>
+
+
+<!-- ====================================================== -->
+<!-- JOIN OVERLAY                                           -->
+<!-- ====================================================== -->
+
+<div
+        id="joinOverlay"
+        class="join-overlay"
+>
+
+    <div class="join-modal">
+
+
+        <div class="join-modal-top">
+
+            <div class="join-modal-logo">
+                Q
+            </div>
+
+            <span>
+                QUICKTALK
+            </span>
+
+        </div>
+
+
+        <h2>
+
+            Join
+
+            <span id="joinRoomName">
+                #room
+            </span>
+
+        </h2>
+
+
+        <p>
+            Enter your name to join this temporary conversation.
+        </p>
+
+
+        <form id="directJoinForm">
+
+
+            <label
+                    class="join-modal-label"
+                    for="directNameInput"
+            >
+                Your name
+            </label>
+
+
+            <div class="join-modal-input-wrapper">
+
+                <span>
+                    @
+                </span>
+
+
+                <input
+                        type="text"
+                        id="directNameInput"
+                        placeholder="Enter your name"
+                        maxlength="30"
+                        autocomplete="off"
+                        spellcheck="false"
+                        required
+                >
+
+            </div>
+
+
+            <div
+                    id="joinError"
+                    class="join-error"
+                    role="alert"
+            ></div>
+
+
+            <button
+                    id="directJoinButton"
+                    type="submit"
+            >
+
+                <span>
+                    Join Room
+                </span>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+        </form>
+
+
+        <div class="join-modal-note">
+
+            <span class="join-note-dot"></span>
+
+            No account or password required
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ====================================================== -->
+<!-- TOASTS                                                 -->
+<!-- ====================================================== -->
+
+<div
+        id="toastContainer"
+        class="toast-container"
+        aria-live="polite"
+></div>
+
+
+<!-- ====================================================== -->
+<!-- DELETE CONFIRMATION                                    -->
+<!-- ====================================================== -->
+
+<div
+        id="deleteMessageOverlay"
+        class="delete-message-overlay"
+        aria-hidden="true"
+>
+
+    <div
+            class="delete-message-backdrop"
+            onclick="cancelDeleteMessage()"
+    ></div>
+
+
+    <div
+            class="delete-message-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="deleteMessageTitle"
+    >
+
+        <span class="delete-message-label">
+            DELETE MESSAGE
+        </span>
+
+
+        <h2 id="deleteMessageTitle">
+            Delete this message?
+        </h2>
+
+
+        <p>
+            The message text and its reactions will be removed immediately.
+            This cannot be undone.
+        </p>
+
+
+        <div
+                id="deleteMessagePreview"
+                class="delete-message-preview"
+        ></div>
+
+
+        <div class="delete-message-buttons">
+
+            <button
+                    type="button"
+                    class="delete-message-cancel"
+                    onclick="cancelDeleteMessage()"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                    type="button"
+                    class="delete-message-confirm"
+                    onclick="confirmDeleteMessage()"
+            >
+                Delete Message
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ====================================================== -->
+<!-- MESSAGE SEARCH                                        -->
+<!-- ====================================================== -->
+
+<div
+        id="messageSearchOverlay"
+        class="message-search-overlay"
+        aria-hidden="true"
+>
+
+
+    <div
+            class="message-search-backdrop"
+            onclick="closeMessageSearch()"
+    ></div>
+
+
+    <section
+            class="message-search-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="messageSearchTitle"
+    >
+
+
+        <div class="message-search-header">
+
+            <div>
+
+                <span class="message-search-label">
+                    QUICKTALK
+                </span>
+
+                <h2 id="messageSearchTitle">
+                    Search messages
+                </h2>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="message-search-close"
+                    onclick="closeMessageSearch()"
+                    aria-label="Close message search"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="message-search-input-wrapper">
+
+            <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+            >
+
+                <circle
+                        cx="11"
+                        cy="11"
+                        r="7"
+                ></circle>
+
+                <path
+                        d="M20 20L16.5 16.5"
+                ></path>
+
+            </svg>
+
+
+            <input
+                    type="search"
+                    id="messageSearchInput"
+                    placeholder="Search messages or people..."
+                    autocomplete="off"
+                    spellcheck="false"
+            >
+
+        </div>
+
+
+        <div class="message-search-meta">
+
+            <span id="messageSearchResultCount">
+                Search loaded messages
+            </span>
+
+            <span class="message-search-shortcut">
+                Ctrl K
+            </span>
+
+        </div>
+
+
+        <div
+                id="messageSearchResults"
+                class="message-search-results"
+        >
+
+            <div class="message-search-empty">
+
+                <strong>
+                    Find a message
+                </strong>
+
+                <span>
+                    Search by message text or sender name.
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- ====================================================== -->
+<!-- CHAT                                                   -->
+<!-- ====================================================== -->
+
+<main class="chat-container">
+
+
+    <!-- ================================================== -->
+    <!-- SIDEBAR                                            -->
+    <!-- ================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-header">
+
+
+            <a
+                    href="/"
+                    class="sidebar-brand"
+            >
+
+                <div class="sidebar-logo">
+                    Q
+                </div>
+
+
+                <div class="sidebar-brand-copy">
+
+                    <strong>
+                        QuickTalk
+                    </strong>
+
+                    <span>
+                        Temporary chat
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <div class="sidebar-room-card">
+
+                <span class="sidebar-room-label">
+                    CURRENT ROOM
+                </span>
+
+
+                <div class="sidebar-room-name">
+
+                    <span>
+                        #
+                    </span>
+
+                    <strong id="roomName">
+                        #room
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ONLINE USERS -->
+
+        <section class="online-section">
+
+
+            <div class="online-heading">
+
+                <div class="online-heading-left">
+
+                    <span class="online-heading-dot"></span>
+
+                    <h3>
+                        Online users
+                    </h3>
+
+                </div>
+
+
+                <span
+                        id="userCount"
+                        class="user-count"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div
+                    id="userList"
+                    class="user-list"
+            ></div>
+
+        </section>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-footer">
+
+
+            <div class="temporary-room-info">
+
+                <div class="temporary-room-icon">
+                    24h
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Temporary room
+                    </strong>
+
+                    <span>
+                        Messages auto-expire
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="leave-button"
+                    onclick="leaveRoom()"
+            >
+
+                <span>
+                    Leave Room
+                </span>
+
+                <span>
+                    ↗
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================================================== -->
+    <!-- CHAT PANEL                                         -->
+    <!-- ================================================== -->
+
+    <section class="chat-panel">
+
+
+        <!-- ================================================== -->
+        <!-- HEADER                                             -->
+        <!-- ================================================== -->
+
+        <header class="chat-header">
+
+
+            <div class="chat-header-info">
+
+
+                <div class="chat-title-row">
+
+                    <h1 id="chatRoomTitle">
+                        #room
+                    </h1>
+
+                    <span class="temporary-pill">
+                        24H
+                    </span>
+
+                </div>
+
+
+                <p>
+
+                    Real-time conversation
+
+                    <span>
+                        •
+                    </span>
+
+                    <strong id="currentUserName">
+                        @user
+                    </strong>
+
+                </p>
+
+            </div>
+
+
+            <div class="chat-header-actions">
+
+
+                <!-- CONNECTION -->
+
+                <div
+                        id="connectionStatus"
+                        class="connection-status connecting"
+                >
+
+                    <span class="connection-dot"></span>
+
+                    <span id="connectionStatusText">
+                        Connecting
+                    </span>
+
+                </div>
+
+
+                <!-- MOBILE USERS -->
+
+                <button
+                        type="button"
+                        id="mobileUsersButton"
+                        class="mobile-users-button"
+                        onclick="openMobileUsers()"
+                >
+
+                    <span class="mobile-users-dot"></span>
+
+                    <span>
+                        Users
+                    </span>
+
+                    <strong id="mobileHeaderUserCount">
+                        0
+                    </strong>
+
+                </button>
+
+
+                <!-- SEARCH -->
+
+                <button
+                        type="button"
+                        id="searchButton"
+                        class="search-button"
+                        onclick="toggleMessageSearch()"
+                        aria-label="Search messages"
+                        aria-expanded="false"
+                >
+
+                    <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                    >
+
+                        <circle
+                                cx="11"
+                                cy="11"
+                                r="7"
+                        ></circle>
+
+                        <path
+                                d="M20 20L16.5 16.5"
+                        ></path>
+
+                    </svg>
+
+                    <span class="search-button-text">
+                        Search
+                    </span>
+
+                </button>
+
+
+                <!-- SHARE -->
+
+                <button
+                        type="button"
+                        id="shareButton"
+                        class="share-button"
+                        onclick="shareRoom()"
+                >
+
+                    <span class="share-button-icon">
+                        ↗
+                    </span>
+
+                    <span id="shareButtonText">
+                        Share Room
+                    </span>
+
+                </button>
+
+
+                <!-- MOBILE LEAVE -->
+
+                <button
+                        type="button"
+                        class="mobile-header-leave-button"
+                        onclick="leaveRoom()"
+                        aria-label="Leave room"
+                >
+                    Leave
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================================================== -->
+        <!-- MESSAGES                                           -->
+        <!-- ================================================== -->
+
+        <section
+                id="messages"
+                class="messages"
+        >
+
+            <div
+                    id="messagesIntro"
+                    class="messages-intro"
+            >
+
+                <div class="messages-intro-icon">
+                    #
+                </div>
+
+
+                <h2>
+                    Welcome to the room
+                </h2>
+
+
+                <p>
+                    This is the beginning of this temporary conversation.
+                </p>
+
+
+                <div class="messages-intro-note">
+
+                    <span></span>
+
+                    Messages automatically disappear after 24 hours
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- NEW MESSAGES                                       -->
+        <!-- ================================================== -->
+
+        <div
+                id="newMessagesNotice"
+                class="new-messages-notice"
+                aria-live="polite"
+        >
+
+            <button
+                    type="button"
+                    id="newMessagesButton"
+                    class="new-messages-button"
+                    onclick="jumpToNewestMessages()"
+            >
+
+                <span
+                        id="newMessagesCount"
+                        class="new-messages-count"
+                >
+                    1 new message
+                </span>
+
+                <span class="new-messages-arrow">
+                    ↓
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- ================================================== -->
+        <!-- TYPING                                             -->
+        <!-- ================================================== -->
+
+        <div
+                id="typingIndicator"
+                class="typing-indicator"
+                aria-live="polite"
+                aria-atomic="true"
+        >
+
+            <span
+                    class="typing-dots"
+                    aria-hidden="true"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </span>
+
+
+            <span id="typingIndicatorText"></span>
+
+        </div>
+
+
+        <!-- ================================================== -->
+        <!-- COMPOSER                                           -->
+        <!-- ================================================== -->
+
+        <div class="composer-area">
+
+
+            <!-- REPLY PREVIEW -->
+
+            <div
+                    id="replyComposer"
+                    class="reply-composer"
+                    aria-hidden="true"
+            >
+
+                <div class="reply-composer-line"></div>
+
+
+                <div class="reply-composer-content">
+
+                    <span
+                            id="replyComposerSender"
+                            class="reply-composer-sender"
+                    ></span>
+
+                    <span
+                            id="replyComposerMessage"
+                            class="reply-composer-message"
+                    ></span>
+
+                </div>
+
+
+                <button
+                        type="button"
+                        class="reply-composer-cancel"
+                        onclick="cancelReply()"
+                        aria-label="Cancel reply"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- MESSAGE FORM -->
+
+            <form
+                    id="messageForm"
+                    class="message-form"
+            >
+
+                <div class="message-input-wrapper">
+
+                    <input
+                            type="text"
+                            id="messageInput"
+                            placeholder="Write a message..."
+                            maxlength="500"
+                            autocomplete="off"
+                    >
+
+
+                    <span
+                            id="messageCounter"
+                            class="message-counter"
+                    >
+                        0 / 500
+                    </span>
+
+                </div>
+
+
+                <button
+                        type="submit"
+                        class="send-button"
+                >
+
+                    <span>
+                        Send
+                    </span>
+
+                    <span class="send-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <div class="composer-meta">
+
+                <span>
+                    Press Enter to send
+                </span>
+
+                <span>
+                    •
+                </span>
+
+                <span>
+                    Temporary by design
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ====================================================== -->
+<!-- MOBILE USERS DRAWER                                    -->
+<!-- ====================================================== -->
+
+<div
+        id="mobileUsersOverlay"
+        class="mobile-users-overlay"
+        aria-hidden="true"
+>
+
+
+    <div
+            class="mobile-users-backdrop"
+            onclick="closeMobileUsers()"
+    ></div>
+
+
+    <aside
+            class="mobile-users-drawer"
+            role="dialog"
+            aria-label="Online users"
+    >
+
+
+        <div class="mobile-drawer-header">
+
+            <div>
+
+                <span class="mobile-drawer-label">
+                    QUICKTALK
+                </span>
+
+                <h2>
+                    Room members
+                </h2>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="mobile-drawer-close"
+                    onclick="closeMobileUsers()"
+                    aria-label="Close users panel"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="mobile-drawer-room">
+
+            <span>
+                CURRENT ROOM
+            </span>
+
+            <strong id="mobileRoomName">
+                #room
+            </strong>
+
+        </div>
+
+
+        <div class="mobile-drawer-online-header">
+
+            <div>
+
+                <span class="mobile-drawer-online-dot"></span>
+
+                Online users
+
+            </div>
+
+
+            <strong id="mobileUserCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div
+                id="mobileUserList"
+                class="mobile-user-list"
+        ></div>
+
+
+        <div class="mobile-drawer-footer">
+
+
+            <div class="mobile-drawer-expiry">
+
+                <strong>
+                    24h temporary room
+                </strong>
+
+                <span>
+                    Messages automatically expire.
+                </span>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="mobile-drawer-leave"
+                    onclick="leaveRoom()"
+            >
+                Leave Room
+            </button>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<script src="/js/room.js?v=1.0.0"></script>
+
+</body>
+
+</html>

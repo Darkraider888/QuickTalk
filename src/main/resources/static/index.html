@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+            name="description"
+            content="QuickTalk - temporary real-time chat rooms without accounts or passwords."
+    >
+
+    <title>QuickTalk | Temporary Real-Time Chat</title>
+
+    <link
+            rel="stylesheet"
+            href="/css/style.css?v=1.0.0"
+    >
+
+</head>
+
+
+<body class="landing-body">
+
+
+<!-- ====================================================== -->
+<!-- BACKGROUND                                             -->
+<!-- ====================================================== -->
+
+<div
+        class="landing-background"
+        aria-hidden="true"
+>
+
+    <div
+            class="landing-glow landing-glow-one"
+    ></div>
+
+    <div
+            class="landing-glow landing-glow-two"
+    ></div>
+
+    <div
+            class="landing-glow landing-glow-three"
+    ></div>
+
+</div>
+
+
+<!-- ====================================================== -->
+<!-- TOP NAVIGATION                                         -->
+<!-- ====================================================== -->
+
+<header class="landing-navbar">
+
+    <div class="landing-navbar-inner">
+
+
+        <!-- BRAND -->
+
+        <a
+                href="/"
+                class="navbar-brand"
+        >
+
+            <div class="navbar-logo">
+                Q
+            </div>
+
+
+            <div class="navbar-brand-text">
+
+                <strong>
+                    QuickTalk
+                </strong>
+
+                <span>
+                    Temporary chat
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- RIGHT STATUS -->
+
+        <div class="navbar-status">
+
+            <span class="navbar-status-dot"></span>
+
+            <span>
+                Real-time
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ====================================================== -->
+<!-- MAIN CONTENT                                           -->
+<!-- ====================================================== -->
+
+<main class="landing-shell">
+
+
+    <!-- ================================================== -->
+    <!-- LEFT CONTENT                                       -->
+    <!-- ================================================== -->
+
+    <section class="landing-brand">
+
+
+        <!-- BADGE -->
+
+        <div class="brand-badge">
+
+            <span class="brand-dot"></span>
+
+            <span>
+                LIVE TEMPORARY CHAT
+            </span>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1 class="landing-title">
+
+            Conversations,
+
+            <span>
+                without the accounts.
+            </span>
+
+        </h1>
+
+
+        <!-- DESCRIPTION -->
+
+        <p class="landing-description">
+
+            Create a room, share the link and start talking
+            instantly.
+
+            No registration, no password and no unnecessary
+            setup.
+
+        </p>
+
+
+        <!-- FEATURES -->
+
+        <div class="landing-features">
+
+
+            <div class="feature-item">
+
+                <span class="feature-icon">
+                    ✓
+                </span>
+
+                <span>
+                    Real-time messaging
+                </span>
+
+            </div>
+
+
+            <div class="feature-item">
+
+                <span class="feature-icon">
+                    ✓
+                </span>
+
+                <span>
+                    No account required
+                </span>
+
+            </div>
+
+
+            <div class="feature-item">
+
+                <span class="feature-icon">
+                    ✓
+                </span>
+
+                <span>
+                    Shareable room links
+                </span>
+
+            </div>
+
+
+            <div class="feature-item">
+
+                <span class="feature-icon">
+                    ✓
+                </span>
+
+                <span>
+                    Messages expire after 24 hours
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- SMALL INFORMATION -->
+
+        <div class="landing-mini-info">
+
+            <div class="mini-info-item">
+
+                <strong>
+                    24h
+                </strong>
+
+                <span>
+                    Temporary history
+                </span>
+
+            </div>
+
+
+            <div class="mini-info-divider"></div>
+
+
+            <div class="mini-info-item">
+
+                <strong>
+                    500
+                </strong>
+
+                <span>
+                    Characters per message
+                </span>
+
+            </div>
+
+
+            <div class="mini-info-divider"></div>
+
+
+            <div class="mini-info-item">
+
+                <strong>
+                    0
+                </strong>
+
+                <span>
+                    Accounts required
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ================================================== -->
+    <!-- JOIN CARD                                          -->
+    <!-- ================================================== -->
+
+    <section class="landing-card">
+
+
+        <!-- CARD TOP -->
+
+        <div class="card-header">
+
+
+            <div class="card-header-copy">
+
+                <p class="card-eyebrow">
+                    QUICKTALK
+                </p>
+
+
+                <h2>
+                    Join a room
+                </h2>
+
+
+                <p>
+                    Enter your name and a room to start talking.
+                </p>
+
+            </div>
+
+
+            <div class="temporary-badge">
+
+                <span></span>
+
+                Temporary
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================================================== -->
+        <!-- JOIN FORM                                          -->
+        <!-- ================================================== -->
+
+        <form
+                id="joinForm"
+                class="join-form"
+        >
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+
+                <div class="form-label-row">
+
+                    <label for="name">
+                        Your name
+                    </label>
+
+                    <span>
+                        Max 30
+                    </span>
+
+                </div>
+
+
+                <div class="input-wrapper">
+
+                    <span class="input-symbol">
+                        @
+                    </span>
+
+
+                    <input
+                            type="text"
+                            id="name"
+                            placeholder="Mehedi"
+                            maxlength="30"
+                            autocomplete="off"
+                            spellcheck="false"
+                            required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ROOM -->
+
+            <div class="form-group">
+
+
+                <div class="form-label-row">
+
+                    <label for="room">
+                        Room name
+                    </label>
+
+                    <span>
+                        Max 40
+                    </span>
+
+                </div>
+
+
+                <div class="input-wrapper">
+
+                    <span class="input-symbol">
+                        #
+                    </span>
+
+
+                    <input
+                            type="text"
+                            id="room"
+                            placeholder="cse-project"
+                            maxlength="40"
+                            autocomplete="off"
+                            spellcheck="false"
+                            required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- JOIN -->
+
+            <button
+                    type="submit"
+                    class="primary-join-button"
+            >
+
+                <span>
+                    Join Room
+                </span>
+
+                <span class="button-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+        </form>
+
+
+        <!-- ================================================== -->
+        <!-- DIVIDER                                            -->
+        <!-- ================================================== -->
+
+        <div class="landing-divider">
+
+            <span>
+                OR
+            </span>
+
+        </div>
+
+
+        <!-- ================================================== -->
+        <!-- RANDOM ROOM                                        -->
+        <!-- ================================================== -->
+
+        <button
+                type="button"
+                id="randomRoomButton"
+                class="random-room-button"
+        >
+
+            <span class="random-button-icon">
+                ✦
+            </span>
+
+
+            <span>
+                Create Random Room
+            </span>
+
+        </button>
+
+
+        <!-- ================================================== -->
+        <!-- PRIVACY INFORMATION                                -->
+        <!-- ================================================== -->
+
+        <div class="privacy-box">
+
+
+            <div class="privacy-icon">
+
+                <span>
+                    24h
+                </span>
+
+            </div>
+
+
+            <div class="privacy-text">
+
+                <strong>
+                    Temporary by design
+                </strong>
+
+
+                <p>
+                    Your chat messages automatically disappear
+                    after 24 hours.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- SMALL CARD FOOTER -->
+
+        <div class="card-bottom-note">
+
+            <span class="card-note-dot"></span>
+
+            <span>
+                No login
+            </span>
+
+            <span>
+                •
+            </span>
+
+            <span>
+                No password
+            </span>
+
+            <span>
+                •
+            </span>
+
+            <span>
+                Just start talking
+            </span>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<!-- ====================================================== -->
+<!-- FOOTER                                                 -->
+<!-- ====================================================== -->
+
+<footer class="landing-footer">
+
+    <div class="landing-footer-inner">
+
+
+        <!-- LEFT -->
+
+        <div class="landing-footer-brand">
+
+            <div class="footer-logo">
+                Q
+            </div>
+
+
+            <div>
+
+                <strong>
+                    QuickTalk
+                </strong>
+
+                <span>
+                    Fast. Simple. Temporary.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CENTER -->
+
+        <div class="landing-footer-center">
+
+            <span>
+                Real-time chat
+            </span>
+
+            <span class="footer-dot-divider">
+                •
+            </span>
+
+            <span>
+                24-hour messages
+            </span>
+
+            <span class="footer-dot-divider">
+                •
+            </span>
+
+            <span>
+                No accounts
+            </span>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="landing-footer-credit">
+
+            <span>
+                Built by
+            </span>
+
+            <strong>
+                Darkraider888
+            </strong>
+
+        </div>
+
+
+    </div>
+
+</footer>
+
+
+<script src="/js/index.js?v=1.0.0"></script>
+
+</body>
+
+</html>
