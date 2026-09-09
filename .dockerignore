@@ -1,0 +1,10 @@
+.idea
+target
+.git
+.env
+*.log
+hs_err_pid*.log
+replay_pid*.log
+*.zip
+.DS_Store
+Thumbs.db
